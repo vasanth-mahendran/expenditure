@@ -1,0 +1,40 @@
+{
+    "expenditures":[
+        {
+            "name" : "vasanth mahendran",
+            "food" : "2200",
+            "travel" : "200",
+            "accomodation" : "400",
+            "entertaiment" : "1000",
+            "emergency" : "50",
+            "other" : "10"
+        },
+        {
+            "name" : "Siva",
+            "food" : "2000",
+            "travel" : "100",
+            "accomodation" : "260",
+            "entertaiment" : "2570",
+            "emergency" : "50",
+            "other" : "10"
+        },
+        {
+            "name" : "Lokesh",
+            "food" : "0",
+            "travel" : "550",
+            "accomodation" : "400",
+            "entertaiment" : "1200",
+            "emergency" : "50",
+            "other" : "10"
+        },
+        {
+            "name" : "Chaithu",
+            "food" : "2400",
+            "travel" : "0",
+            "accomodation" : "400",
+            "entertaiment" : "800",
+            "emergency" : "50",
+            "other" : "10"
+        }
+    ]
+}
