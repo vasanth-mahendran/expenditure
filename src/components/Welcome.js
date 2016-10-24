@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Row, Col, Button, PageHeader, Glyphicon, Carousel, Navbar, Nav, 
-  NavDropdown, MenuItem  } from 'react-bootstrap';
+  NavDropdown, MenuItem, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import {Pie} from 'react-chartjs-2';
 
@@ -104,19 +104,16 @@ export default class Welcome extends React.Component {
       carouselContent = this.state.sliderItems.map((item,idx)=>
       {
         return <Carousel.Item>
-              <div style={{height:'300px',width:'100%',textAlign:'center','verticalAlign':'middle'}}>
+              <div style={{height:'400px',width:'100%',textAlign:'center','verticalAlign':'middle'}}>
                 <div style={{marginTop:'20px'}}>
-                  Food Expense is {item.food}
-                  <br/>
-                  Travel Expense is {item.travel}
-                  <br/>
-                  Accomodation Expense is {item.accomodation}
-                  <br/>
-                  Entertaiment Expense is {item.entertaiment}
-                  <br/>
-                  Emergency Expense is {item.emergency}
-                  <br/>
-                  Others Expense is {item.other}
+                  <ListGroup style={{textAlign:'left'}}>
+                    <ListGroupItem>Food Expense is {item.food}</ListGroupItem>
+                    <ListGroupItem>Travel Expense is {item.travel}</ListGroupItem>
+                    <ListGroupItem>Accomodation Expense is {item.accomodation}</ListGroupItem>
+                    <ListGroupItem>Entertaiment Expense is {item.entertaiment}</ListGroupItem>
+                    <ListGroupItem>Emergency Expense is {item.emergency}</ListGroupItem>
+                    <ListGroupItem>Others Expense is {item.other}</ListGroupItem>
+                  </ListGroup>
                 </div>
               </div>
               <Carousel.Caption>
@@ -222,8 +219,8 @@ export default class Welcome extends React.Component {
           <Row>
             <Col xs={12}>
             <h2>Charts</h2>
-            <p>To represent Expenditure data is as charts,I have used react-bootstrap-table module.Refer 
-            https://github.com/AllenFang/react-bootstrap-table for more detail about react-bootstrap-table</p>
+            <p>To represent Expenditure data is as charts,I have used react-chartjs-2 module.Refer 
+            https://www.npmjs.com/package/react-chartjs-2 for more detail about react-chartjs-2</p>
             </Col>
           </Row>
           
