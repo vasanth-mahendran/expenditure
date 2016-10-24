@@ -22,13 +22,15 @@
     "javascript"
   ],
   "dependencies": {
+    "chart.js": "^2.3.0",
     "classnames": "^2.2.5",
     "express": "^4.13.4",
     "lodash": "^4.16.4",
     "react": "^0.14.8",
     "react-bootstrap": "^0.30.3",
+    "react-bootstrap-table": "^2.5.6",
+    "react-chartjs-2": "^1.5.0",
     "react-dom": "^0.14.8",
-    "react-table": "^2.0.1",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {

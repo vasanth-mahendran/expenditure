@@ -1,6 +1,9 @@
 .react-bs-table{
-    height: inherit;
+    height: inherit !important
 }
 .react-bs-container-body{
-    height: inherit;
+    height: inherit !important
+}
+.navigation-header-wrapper{
+    background-color: #827f7f
 }
