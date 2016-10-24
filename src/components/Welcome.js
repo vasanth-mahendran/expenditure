@@ -110,7 +110,13 @@ export default class Welcome extends React.Component {
                   <br/>
                   Travel Expense is {item.travel}
                   <br/>
+                  Accomodation Expense is {item.accomodation}
+                  <br/>
                   Entertaiment Expense is {item.entertaiment}
+                  <br/>
+                  Emergency Expense is {item.emergency}
+                  <br/>
+                  Others Expense is {item.other}
                 </div>
               </div>
               <Carousel.Caption>
