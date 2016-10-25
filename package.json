@@ -3,16 +3,14 @@
   "version": "1.0.0",
   "description": "Simplest react app deployable in heroku.",
   "main": "./src/index.js",
-  "homepage": "https://github.com/wallacyyy/webpack-heroku",
-  "author": "Leonardo Couto",
-  "license": "MIT",
   "scripts": {
     "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
-    "start": "node ./app.js"
+    "start": "node ./app.js",
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wallacyyy/webpack-heroku.git"
+    "url": "git@github.com:vasanth-mahendran/expenditure.git"
   },
   "keywords": [
     "react",
