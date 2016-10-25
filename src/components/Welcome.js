@@ -3,7 +3,11 @@ import { Grid, Row, Col, Button, PageHeader, Glyphicon, Carousel, Navbar, Nav,
   NavDropdown, MenuItem, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import {Pie} from 'react-chartjs-2';
-
+import {Gmaps, Marker, InfoWindow, Circle} from 'react-gmaps';
+const coords = {
+  lat: 37.778519,
+  lng: -122.405640
+};
 export default class Welcome extends React.Component {
   constructor() {
     super();
@@ -14,7 +18,12 @@ export default class Welcome extends React.Component {
       direction:null,
       pieIndex:0,
       pieDirection:null,
-      pieSliderItems: []
+      pieSliderItems: [],
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {},
+      showMap:false,
+      places:[]
     };
     this.colors = ['#F7464A','#46BFBD','#FDB45C','#949FB1','#4D5360','#9dd49d'];
     this.highlights = ['#FF5A5E','#5AD3D1','#FFC870','#A8B3C5','#616774','#4ca24c'];
@@ -26,6 +35,11 @@ export default class Welcome extends React.Component {
     this.handlePieSelect = this.handlePieSelect.bind(this);
     this.renderNavbarMenu = this.renderNavbarMenu.bind(this);
     this.getChartData = this.getChartData.bind(this);
+    this.onMapCreated = this.onMapCreated.bind(this);
+    this.onDragEnd = this.onDragEnd.bind(this);
+    this.onCloseClick = this.onCloseClick.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.handleMapRefresh = this.handleMapRefresh.bind(this);
   }
 
   handleSelect(selectedIndex, e) {
@@ -54,6 +68,14 @@ export default class Welcome extends React.Component {
     .then(response => response.json())
     .then((json)=> {
       this.setState({tableItems:json.expenditures});
+    });
+  }
+
+  handleMapRefresh(){
+    fetch('/getexpenditure')
+    .then(response => response.json())
+    .then((json)=> {
+      this.setState({places:json.places,showMap:true});
     });
   }
 
@@ -86,6 +108,25 @@ export default class Welcome extends React.Component {
     data.datasets = [{data:values,backgroundColor:this.colors,hoverBackgroundColor:this.highlights}]
     return data;
   }
+
+  onMapCreated(map) {
+    map.setOptions({
+      disableDefaultUI: true
+    });
+  }
+ 
+  onDragEnd(e) {
+    console.log('onDragEnd', e);
+  }
+ 
+  onCloseClick() {
+    console.log('onCloseClick');
+  }
+
+  onClick(e) {
+    console.log('onClick', e);
+  }
+
   render () {
     var carouselContent;
     if(this.state.sliderItems.length==0){
@@ -159,6 +200,37 @@ export default class Welcome extends React.Component {
       pieCarouselContent = <Carousel id='chart' style={{height:'700px'}} activeIndex={this.state.pieIndex} direction={this.state.pieDirection} onSelect={this.handlePieSelect}
           className='jumbotron'>{pieCarouselContent}</Carousel>
     }
+    var googleMap;
+    if(this.state.showMap){
+      googleMap = <Gmaps className="map"
+        width={'800px'}
+        height={'600px'}
+        lat={coords.lat}
+        lng={coords.lng}
+        zoom={12}
+        loadingMessage={'Be happy'}
+        params={{v: '3.exp'}}
+        onMapCreated={this.onMapCreated}>
+        {this.state.places.map(function(place,idx) {
+          return <Marker
+            lat={place.lat}
+            lng={place.lng}
+            draggable={true}
+            onDragEnd={this.onDragEnd} />
+        },this)}
+        {this.state.places.map(function(place,idx) {
+          return <InfoWindow
+            lat={place.lat}
+            lng={place.lng}
+            content={'Hello, React :)'}
+            onCloseClick={this.onCloseClick} />
+        },this)}
+      </Gmaps>
+    }else{
+      googleMap = <Button type="button" className="btn btn-default" onClick={this.handleMapRefresh}>
+        <Glyphicon glyph='refresh' style={{fontSize: '30px'}}/>
+      </Button>
+    }
 
     function priceFormatter(cell, row){
       return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
@@ -223,8 +295,15 @@ export default class Welcome extends React.Component {
             https://www.npmjs.com/package/react-chartjs-2 for more detail about react-chartjs-2</p>
             </Col>
           </Row>
-          
           {pieCarouselContent}
+          <Row>
+            <Col xs={12}>
+            <h2>Google Maps</h2>
+            <p>To represent Expenditure data trip laces is as google map,I have used react-gmaps module.Refer 
+            https://www.npmjs.com/package/react-gmaps for more detail about react-gmaps</p>
+            </Col>
+          </Row>
+          {googleMap}
         </Grid>
       </div>
       );

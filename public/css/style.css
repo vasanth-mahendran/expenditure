@@ -7,3 +7,6 @@
 .navigation-header-wrapper{
     background-color: #827f7f
 }
+.map{
+    width: 100% !important
+}
