@@ -95,6 +95,7 @@ export default class Welcome extends React.Component {
           <MenuItem href='#slider'>Slider</MenuItem>
           <MenuItem href='#table'>Table</MenuItem>
           <MenuItem href='#chart'>Charts</MenuItem>
+          <MenuItem href='#map'>Maps</MenuItem>
         </NavDropdown>
       </Nav>
     );
@@ -202,7 +203,7 @@ export default class Welcome extends React.Component {
     }
     var googleMap;
     if(this.state.showMap){
-      googleMap = <Gmaps className="map"
+      googleMap = <Gmaps id="map" className="map"
         width={'800px'}
         height={'600px'}
         lat={coords.lat}
@@ -227,7 +228,7 @@ export default class Welcome extends React.Component {
         },this)}
       </Gmaps>
     }else{
-      googleMap = <Button type="button" className="btn btn-default" onClick={this.handleMapRefresh}>
+      googleMap = <Button id="map" type="button" className="btn btn-default" onClick={this.handleMapRefresh}>
         <Glyphicon glyph='refresh' style={{fontSize: '30px'}}/>
       </Button>
     }
