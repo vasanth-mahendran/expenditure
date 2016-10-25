@@ -6,7 +6,7 @@
   "scripts": {
     "build": "NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
     "start": "node ./app.js",
-    "postinstall": "npm run build"
+    "postinstall": "webpack -p"
   },
   "repository": {
     "type": "git",
