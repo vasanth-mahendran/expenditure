@@ -59,5 +59,4 @@ node_modules
 Session.vim
 .netrwhist
 *~
-bundle.js
 bundle.js.map
