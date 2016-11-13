@@ -4,6 +4,8 @@ import { Grid, Row, Col, Button, PageHeader, Glyphicon, Carousel, Navbar, Nav,
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 import {Pie} from 'react-chartjs-2';
 import {Gmaps, Marker, InfoWindow, Circle} from 'react-gmaps';
+import Expenditure from './Expenditure';
+
 const coords = {
   lat: 37.778519,
   lng: -122.405640
@@ -23,7 +25,11 @@ export default class Welcome extends React.Component {
       activeMarker: {},
       selectedPlace: {},
       showMap:false,
-      places:[]
+      places:[],
+      totalDataSize: 38,
+      sizePerPage: 5,
+      currentPage: 1,
+      pagination: false
     };
     this.colors = ['#F7464A','#46BFBD','#FDB45C','#949FB1','#4D5360','#9dd49d'];
     this.highlights = ['#FF5A5E','#5AD3D1','#FFC870','#A8B3C5','#616774','#4ca24c'];
@@ -40,6 +46,9 @@ export default class Welcome extends React.Component {
     this.onCloseClick = this.onCloseClick.bind(this);
     this.onClick = this.onClick.bind(this);
     this.handleMapRefresh = this.handleMapRefresh.bind(this);
+    this.onPageChange = this.onPageChange.bind(this);
+    this.onSizePerPageList = this.onSizePerPageList.bind(this);
+    this.handleTableRefreshNew = this.handleTableRefreshNew.bind(this);
   }
 
   handleSelect(selectedIndex, e) {
@@ -68,6 +77,14 @@ export default class Welcome extends React.Component {
     .then(response => response.json())
     .then((json)=> {
       this.setState({tableItems:json.expenditures});
+    });
+  }
+
+  handleTableRefreshNew(){
+    fetch('/api/expenditures?page=1&limit=5')
+    .then(response => response.json())
+    .then((json)=> {
+      this.setState({tableItems:json.docs,pagination:true});
     });
   }
 
@@ -126,6 +143,32 @@ export default class Welcome extends React.Component {
 
   onClick(e) {
     console.log('onClick', e);
+  }
+
+  onPageChange(page, sizePerPage) {
+    fetch('/api/expenditures?page='+page+'&limit='+sizePerPage)
+    .then(response => response.json())
+    .then((json)=> {
+      this.setState(
+        {
+          tableItems:json.docs,
+          currentPage:page
+        }
+      );
+    });
+  }
+
+  onSizePerPageList(sizePerPage) {
+    fetch('/api/expenditures?page='+this.state.currentPage+'&limit='+sizePerPage)
+    .then(response => response.json())
+    .then((json)=> {
+      this.setState(
+        {
+          tableItems:json.docs,
+          sizePerPage:sizePerPage
+        }
+      );
+    });
   }
 
   render () {
@@ -233,6 +276,34 @@ export default class Welcome extends React.Component {
       </Button>
     }
 
+    var table = <BootstrapTable data={this.state.tableItems} striped={true} hover={true}
+            remote={ true } pagination={ this.state.pagination }
+            fetchInfo={ { dataTotalSize: this.state.totalDataSize } }
+            options={ 
+                { noDataText: <Button type="button" className="btn btn-default" onClick={this.handleTableRefreshNew}>
+                    <Glyphicon glyph='refresh' style={{fontSize: '30px'}}/>
+                  </Button>,
+                  sizePerPage: this.state.sizePerPage,
+                  onPageChange: this.onPageChange,
+                  onSizePerPageList : this.onSizePerPageList,
+                  sizePerPageList: [ 5, 10, 20 ],
+                  pageStartIndex: 1,
+                  page: this.state.currentPage
+                } 
+              }>
+                <TableHeaderColumn dataField="ssn" isKey={true} dataAlign="center" dataSort={true}>SSN</TableHeaderColumn>
+                <TableHeaderColumn dataField="first" dataAlign="center" dataSort={true}>First Name</TableHeaderColumn>
+                <TableHeaderColumn dataField="last" dataAlign="center" dataSort={true}>Last Name</TableHeaderColumn>
+                <TableHeaderColumn dataField="age" dataAlign="center" dataSort={true}>Age</TableHeaderColumn>
+                <TableHeaderColumn dataField="food" dataFormat={priceFormatter} dataSort={true}>Food</TableHeaderColumn>
+                <TableHeaderColumn dataField="travel" dataFormat={priceFormatter} dataSort={true}>Travel</TableHeaderColumn>
+                <TableHeaderColumn dataField="accomodation" dataFormat={priceFormatter} dataSort={true}>Accomodation</TableHeaderColumn>
+                <TableHeaderColumn dataField="entertaiment" dataFormat={priceFormatter} dataSort={true}>Entertaiment</TableHeaderColumn>
+                <TableHeaderColumn dataField="emergency" dataFormat={priceFormatter} dataSort={true}>Emergency</TableHeaderColumn>
+                <TableHeaderColumn dataField="other" dataFormat={priceFormatter} dataSort={true}>Others</TableHeaderColumn>
+            </BootstrapTable>
+            
+
     function priceFormatter(cell, row){
       return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
     }
@@ -276,18 +347,7 @@ export default class Welcome extends React.Component {
             </Col>
           </Row>
           <div id='table'>
-            <BootstrapTable data={this.state.tableItems} striped={true} hover={true}
-            options={ { noDataText: <Button type="button" className="btn btn-default" onClick={this.handleTableRefresh}>
-                    <Glyphicon glyph='refresh' style={{fontSize: '30px'}}/>
-                  </Button> } }>
-                <TableHeaderColumn dataField="name" isKey={true} dataAlign="center" dataSort={true}>Name</TableHeaderColumn>
-                <TableHeaderColumn dataField="food" dataFormat={priceFormatter} dataSort={true}>Food</TableHeaderColumn>
-                <TableHeaderColumn dataField="travel" dataFormat={priceFormatter} dataSort={true}>Travel</TableHeaderColumn>
-                <TableHeaderColumn dataField="accomodation" dataFormat={priceFormatter} dataSort={true}>Accomodation</TableHeaderColumn>
-                <TableHeaderColumn dataField="entertaiment" dataFormat={priceFormatter} dataSort={true}>Entertaiment</TableHeaderColumn>
-                <TableHeaderColumn dataField="emergency" dataFormat={priceFormatter} dataSort={true}>Emergency</TableHeaderColumn>
-                <TableHeaderColumn dataField="other" dataFormat={priceFormatter} dataSort={true}>Others</TableHeaderColumn>
-            </BootstrapTable>
+          {table}
           </div>
           <Row>
             <Col xs={12}>
@@ -305,6 +365,7 @@ export default class Welcome extends React.Component {
             </Col>
           </Row>
           {googleMap}
+          <Expenditure enabled='true'/>
         </Grid>
       </div>
       );
