@@ -41,7 +41,7 @@ module.exports = {
     var Expenditure = mongoose.model('expenditures', expenditureSchema);
     app.use('/public', publicPath);
     app.get('/', function (_, res) { res.sendFile(indexPath) });
-    app.get("/getexpenditure", function(req, res) {
+    app.get("/static/expenditures", function(req, res) {
         var expenditure = JSON.parse(fs.readFileSync('static/expenditure.json', 'utf8'));
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(expenditure));
