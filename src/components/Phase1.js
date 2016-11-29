@@ -56,7 +56,7 @@ export default class Welcome extends React.Component {
   }
 
   handleSliderRefresh(){
-    fetch('//static/expenditures')
+    fetch('/static/expenditures')
     .then(response => response.json())
     .then((json)=> {
       this.setState({sliderItems:json.expenditures});
@@ -64,7 +64,7 @@ export default class Welcome extends React.Component {
   }
 
   handleTableRefresh(){
-    fetch('//static/expenditures')
+    fetch('/static/expenditures')
     .then(response => response.json())
     .then((json)=> {
       this.setState({tableItems:json.expenditures});
@@ -72,7 +72,7 @@ export default class Welcome extends React.Component {
   }
 
   handleMapRefresh(){
-    fetch('//static/expenditures')
+    fetch('/static/expenditures')
     .then(response => response.json())
     .then((json)=> {
       this.setState({places:json.places,showMap:true});
@@ -80,7 +80,7 @@ export default class Welcome extends React.Component {
   }
 
   handlePieSliderRefresh(){
-    fetch('//static/expenditures')
+    fetch('/static/expenditures')
     .then(response => response.json())
     .then((json)=> {
       this.setState({pieSliderItems:json.expenditures});
