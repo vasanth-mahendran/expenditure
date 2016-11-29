@@ -40,7 +40,6 @@ module.exports = {
     expenditureSchema.plugin(mongoosePaginate);
     var Expenditure = mongoose.model('expenditures', expenditureSchema);
     app.use('/public', publicPath);
-    app.get('/', function (_, res) { res.sendFile(indexPath) });
     app.get("/static/expenditures", function(req, res) {
         var expenditure = JSON.parse(fs.readFileSync('static/expenditure.json', 'utf8'));
         res.setHeader('Content-Type', 'application/json');
@@ -69,6 +68,7 @@ module.exports = {
         res.status(200).json(expenditure);
       });
     });
+    app.get('*', function (_, res) { res.sendFile(indexPath) });
     return app
   }
 }

@@ -117,11 +117,13 @@ export default class Phase2 extends React.Component {
             <Navbar className="navbar-static-top" bsStyle="default" style={{ marginBottom: 0, height: 60 }}>
               <Navbar.Header>
                 <Navbar.Brand>
-                  <img
-                    alt="Expenditures"
-                    src="public/images/logo.png"
-                    style={{height:'60px',width:'120px'}}
-                  />
+                  <a href="/">
+                    <img
+                      alt="Expenditures"
+                      src="public/images/logo.png"
+                      style={{height:'60px',width:'120px','marginTop':'-15px'}}
+                    />
+                  </a>
                 </Navbar.Brand>
               </Navbar.Header>
               <Navbar.Collapse style={{ marginBottom: 0 }}>
