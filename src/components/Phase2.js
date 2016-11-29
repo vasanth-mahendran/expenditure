@@ -22,7 +22,7 @@ export default class Phase2 extends React.Component {
       selectedPlace: {},
       showMap:false,
       places:[],
-      totalDataSize: 38,
+      totalDataSize: 100,
       sizePerPage: 5,
       currentPage: 1,
       pagination: false
