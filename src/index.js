@@ -34,7 +34,9 @@ const Index = () => (
             <Button>Phase 2</Button>
         </LinkContainer>
         <h1>Expenditures</h1>
-        <p>Click on the below links to navigate to phase 1 and phase 2 pages respectively.</p>
+        <p>Click on the above links to navigate to phase 1 and phase 2 pages respectively. 
+        Phase 1 use api which fetches data from static resource
+        Phase 2 use api which fetches data from mongodb</p>
     </Row>
   </div>
 )

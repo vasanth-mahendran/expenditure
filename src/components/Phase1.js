@@ -247,7 +247,7 @@ export default class Welcome extends React.Component {
                     <img
                       alt="Expenditures"
                       src="public/images/logo.png"
-                      style={{height:'60px',width:'120px'}}
+                      style={{height:'60px',width:'120px','marginTop':'-15px'}}
                     />
                   </a>
                 </Navbar.Brand>
