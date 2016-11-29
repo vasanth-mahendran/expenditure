@@ -10,3 +10,13 @@ h1 {
 .Image {
   height: 100%;
 }
+.fade_in {
+  transition: visibility 0s 2s, opacity 2s linear;
+  visibility: hidden;
+  opacity: 0;
+}
+.fade_out {
+  transition: opacity 2s linear;
+  opacity: 1;
+  visibility: visible;
+}

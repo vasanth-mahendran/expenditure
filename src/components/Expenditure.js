@@ -8,27 +8,36 @@ export default class Expenditure extends React.Component {
     this.state = { 
       expenditure: null,
       page : 1,
-      timeout : 4000,
-      enabled : this.props.enabled
+      timeout : 4500,
+      enabled : this.props.enabled,
+      fading : false
     };
     this.handleNext = this.handleNext.bind(this);
   }
 
   handleNext(){
+    this.setState({fading: true});
     fetch('/api/expenditures?page='+this.state.page+'&limit=1')
     .then(response => response.json())
     .then((json)=> {
-        this.setState({expenditure:json.docs[0],page:this.state.page+1});
-        if(this.state.page > json.total){
-            this.setState({enabled:false});
+        setTimeout(_ => {
+            this.setState(
+            {
+                expenditure:json.docs[0],
+                page:this.state.page+1,
+                fading: false
+            });
+        }, 2000);
+        if(this.state.page >= json.total){
+            this.setState({enabled:false,fading:false});
         }
     });
   }
   render(){
-      const {expenditure,page,timeout, enabled} = this.state;
+      const {expenditure,page,timeout, enabled,fading} = this.state;
       var listGroup;
       if(expenditure!=null){
-          listGroup = <ListGroup style={{textAlign:'left'}}>
+          listGroup = <ListGroup style={{textAlign:'left'}} className={`${fading ? 'fade_in' : 'fade_out'}`}>
                     <ListGroupItem>First Name is {expenditure.first}</ListGroupItem>
                     <ListGroupItem>Last Name is {expenditure.last}</ListGroupItem>
                     <ListGroupItem>SSN is {expenditure.ssn}</ListGroupItem>

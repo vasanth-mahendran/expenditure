@@ -149,7 +149,7 @@ export default class Phase2 extends React.Component {
             <Col xs={12}>
             <h2>Interval</h2>
             <p>To represent all Expenditure datas from mongo in an internval,I have used react-interval module. This component
-            will start to fetch the expenditure data from mongoDb after 4000 seconds and refresh the data after every 
+            will start to fetch the expenditure data from mongoDb after 4500 mili-seconds and refresh the data after every 
             4000 seconds with next data from the DB.
             Refer https://www.npmjs.com/package/react-interval for more detail about react-interval</p>
             </Col>
